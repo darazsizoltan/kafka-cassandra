@@ -1,0 +1,15 @@
+server:
+  port: 8081
+kafka:
+  servers: localhost:9092
+
+spring:
+  data:
+    cassandra:
+      keyspace-name: practice
+      contact-points: http://127.0.0.1
+      local-datacenter: datacenter1
+      username: cassandra
+      password: password
+      port: 9042
+      schema-action: create_if_not_exists

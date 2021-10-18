@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zoda-be-deployment
+  namespace: practice
+spec:
+  selector:
+    matchLabels:
+      app: zoda-be-deployment
+  template:
+    metadata:
+      labels:
+        app: zoda-be-deployment
+    spec:
+      containers:
+        - name: zoda-be
+          image: darazolt/zoda-be:1.2
+          ports:
+            - containerPort: 8081
+          volumeMounts:
+            - name: be-config-volume
+              mountPath: /config
+      volumes:
+        - name: be-config-volume
+          configMap:
+            name: be-config
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: zoda-be-service
+  namespace: practice
+spec:
+  type: LoadBalancer
+  selector:
+    app: zoda-be-deployment
+  ports:
+    - port: 8081
+      targetPort: 8081

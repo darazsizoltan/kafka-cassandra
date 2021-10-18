@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zoda-fe-deployment
+  namespace: practice
+spec:
+  selector:
+    matchLabels:
+      app: zoda-fe-deployment
+  template:
+    metadata:
+      labels:
+        app: zoda-fe-deployment
+    spec:
+      containers:
+        - name: zoda-fe
+          image: darazolt/zoda-fe:1.2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+          volumeMounts:
+            - name: fe-config-volume
+              mountPath: /config
+      volumes:
+        - name: fe-config-volume
+          configMap:
+            name: fe-config
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: zoda-fe-service
+  namespace: practice
+spec:
+  type: LoadBalancer
+  selector:
+    app: zoda-fe-deployment
+  ports:
+    - port: 8082
+      targetPort: 8082

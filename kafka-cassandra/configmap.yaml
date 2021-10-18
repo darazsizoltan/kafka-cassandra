@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: be-config
+  namespace: practice
+data:
+  application.properties: |
+    kafka.servers=kafka.practice.svc.cluster.local:9092
+    spring.data.cassandra.keyspace-name=practice
+    spring.data.cassandra.contact-points=cassandra
+    spring.data.cassandra.local-datacenter=datacenter1
+    spring.data.cassandra.username=cassandra
+    spring.data.cassandra.password=password
+    spring.data.cassandra.port=9042
+    spring.data.cassandra.schema-action=CREATE_IF_NOT_EXISTS
